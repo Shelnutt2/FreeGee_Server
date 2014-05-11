@@ -30,9 +30,10 @@ class Api extends REST_Controller {
 			$action = $this->actions_model->find_by_name( $this->get('name') );
 		}
 		 if($action) {
-		 	echo $this->actions_model->objectToArray($action);
+		 	#echo $this->actions_model->objectToArray($action);
+		 	$array = json_decode(json_encode($action), true);
 		 	$data['status'] = 'ok';
-		 	$data['result'] = $action;
+		 	$data['result'] = $array;
 		 	$this->response($data, 200);
 		 }
 		 else
@@ -41,10 +42,14 @@ class Api extends REST_Controller {
 
 	function actions_get(){
 		$actions = $this->actions_model->find_all();
-		#echo $this->actions_model->objectToArray($actions[0]);
+		$names = $this->actions_model->find_all_names();
+		foreach($this->actions_model->find_all_names() as $name){
+			echo $name . "\n";
+		}
 		if($actions) {
+			$array = json_decode(json_encode($actions), true);
 			$data['status'] = 'ok';
-			$data['result'] = $actions;
+			$data['result'] = $names;
 			$this->response($data, 200);
 		}
 		else

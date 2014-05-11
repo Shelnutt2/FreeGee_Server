@@ -188,10 +188,23 @@ class Actions_model extends BF_Model {
 		{
 			$this->select($this->table_name . '.*, name');
 		}
-	
 		return parent::find_all();
 	
 	}//end find_by_name()
+	
+	public function find_all_names(){
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, name');
+		}
+		$array = parent::find_all();
+		$array = json_decode(json_encode($array), true);
+		$namesarray = array();
+		foreach($array as $action){
+			$namesarray[$action['id']] = $action['name'];
+		}
+		return $namesarray;
+	}
 	
 	public function get_dependencies_by_id($id=null){
 		
@@ -199,8 +212,7 @@ class Actions_model extends BF_Model {
 		{
 			$this->select($this->dependecies_table_name . '.*, base_id');
 		}
-		
-		return parent::find($id);
+		return parent::find_by('base_id',$id,'and');
 	}
 	
 	public function get_dependencies_by_name($name=null)
@@ -209,7 +221,6 @@ class Actions_model extends BF_Model {
 		{
 			$this->select($this->dependecies_table_name . '.*, base_name');
 		}
-	
 		return parent::find_by('base_name',$name,'and');
 	
 	}//end find_by_name()
@@ -226,15 +237,18 @@ class Actions_model extends BF_Model {
 	 */
 	function createOptions($fieldName, $labelsArray=array(), $selectedOption, $fieldType,$valuesArray = array()) {
 		$returnString = '';
+		$valuesArray = array_values($valuesArray);
+		$labelsArray = array_values($labelsArray);
 		if(count($valuesArray)!=count($labelsArray))
 			$valuesArray=$labelsArray;
 		if ($fieldType === 'checkbox') {
 			for ($i=0;$i<count($labelsArray);$i++) {
-				$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i];
+				$returnString.='<label for="'.$valuesArray[$i].'">';
+				$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i].' />&nbsp';
 				if(in_array($valuesArray[$i], $selectedOption)){
 					$returnString.=' checked="checked" ';
 				}
-				$returnString.=' />&nbsp&nbsp<label>'.$labelsArray[$i].'</label>';
+				$returnString.=$labelsArray[$i].'</label>';
 			}
 		}
 		if ($fieldType === 'radio') {

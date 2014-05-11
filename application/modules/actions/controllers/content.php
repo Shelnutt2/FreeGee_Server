@@ -192,7 +192,7 @@ class content extends Admin_Controller
 		$data['stockonly']        = $this->input->post('actions_stockonly');
 		$data['hidden']        = $this->input->post('actions_hidden');
 		$data['priority']        = $this->input->post('actions_priority');
-		$data['dependencies']        = $this->input->post('actions_dependencies');
+		$data['dependencies']        = $this->setDependencies($this->input->post('actions_dependencies'));
 		$data['successmessage']        = $this->input->post('actions_successmessage');
 		$data['rebootrecovery']        = $this->input->post('actions_rebootrecovery');
 
@@ -219,5 +219,20 @@ class content extends Admin_Controller
 
 	//--------------------------------------------------------------------
 
-
+	private function setDependencies($action_dependencies){
+		if(is_bool($action_dependencies)){
+			$this->removeDependencies();
+			return $action_dependencies;
+		}
+		else{
+			$action_dependencies = array_filter($action_dependencies);
+			if(empty($action_dependencies)){ #Array should never return empty but checking anyway
+				return 0;
+			}
+			else{
+				
+				return 1;
+			}
+		}
+	}
 }
