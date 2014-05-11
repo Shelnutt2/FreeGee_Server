@@ -1856,6 +1856,38 @@ class BF_Model extends CI_Model
     public function offset($offset) { $this->db->offset($offset); return $this; }
     public function set($key, $value = '', $escape = TRUE) { $this->db->set($key, $value, $escape); return $this; }
 
+    /**
+     * 
+     * @param string $fieldName Name of the checkbox or radio buttons field
+     * @param array $labelsArray labels array
+     * @param array $selectedOption labels which are prechecked
+     * @param string $fieldType Specify if its 'checkbox' or 'radio'
+     * @param array $valuesArray Option values array, if not given values will be labels
+     * @return string
+     */
+    function createOptions($fieldName, $labelsArray=array(), $selectedOption, $fieldType,$valuesArray = array()) {
+    	$returnString = '';
+    	if(count($valuesArray)!=count($labelsArray))
+    		$valuesArray=$lebelsArray;
+    	if ($fieldType === 'checkbox') {
+    		for ($i=0;$i<count($labelsArray);$i++) {
+    			$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i];
+    			if(in_array($valuesArray[$i], $selectedOption)){
+    				$returnString.=' checked="checked" ';
+    			}
+    			$returnString.=' />&nbsp&nbsp<label>'.$labelsArray[$i].'</label>';
+    		}
+    	}
+    	if ($fieldType === 'radio') {
+    		for ($i=0;$i<count($labelsArray);$i++) {
+    			$returnString.='&nbsp&nbsp<input type="radio" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i];
+    			if($valuesArray[$i]== $selectedOption)
+    				$returnString.=' checked="checked" ';
+    			$returnString.=' /><label>'.$labelsArray[$i].'</label>';
+    		}
+    	}
+    	return $returnString;
+    }
 }//end BF_model
 
 //--------------------------------------------------------------------

@@ -111,17 +111,18 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			</div>
 
 			<div class="control-group <?php echo form_error('dependencies') ? 'error' : ''; ?>">
-				<?php echo form_label('Action Dependencies'. lang('bf_form_label_required'), 'actions_dependencies', array('class' => 'control-label') ); ?>
+				<?php echo form_label('Action Dependencies', 'actions_dependencies', array('class' => 'control-label') ); ?>
 				<div class='controls'>
 					<label class='checkbox' for='actions_dependencies'>
 						<input type='checkbox' id='actions_dependencies' name='actions_dependencies' value='1' <?php echo (isset($actions['dependencies']) && $actions['dependencies'] == 1) ? 'checked="checked"' : set_checkbox('actions_dependencies', 1); ?>>
 						<span class='help-inline'><?php echo form_error('dependencies'); ?></span>
+						<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('actions_dependencies[]', $this->actions_model->find_all(), array(), 'checkbox'); ?> 
 					</label>
 				</div>
 			</div>
 
 			<div class="control-group <?php echo form_error('successmessage') ? 'error' : ''; ?>">
-				<?php echo form_label('Success Message'. lang('bf_form_label_required'), 'actions_successmessage', array('class' => 'control-label') ); ?>
+				<?php echo form_label('Success Message', 'actions_successmessage', array('class' => 'control-label') ); ?>
 				<div class='controls'>
 					<input id='actions_successmessage' type='text' name='actions_successmessage'  value="<?php echo set_value('actions_successmessage', isset($actions['successmessage']) ? $actions['successmessage'] : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('successmessage'); ?></span>

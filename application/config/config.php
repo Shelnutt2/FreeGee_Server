@@ -20,7 +20,7 @@ $config['modules_locations'] = array(
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://freegee.codefi.re';
+$config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------
