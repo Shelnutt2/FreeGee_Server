@@ -2,8 +2,9 @@
 
 class Actions_model extends BF_Model {
 
-	protected $dependecies_table_name = "action_dependencies";
+	protected $dependencies_table_name = "actions_dependencies";
 	protected $table_name	= "actions";
+	public $temp_name = "actions";
 	protected $key			= "id";
 	protected $soft_deletes	= false;
 	protected $date_format	= "datetime";
@@ -111,26 +112,81 @@ class Actions_model extends BF_Model {
 
 	//--------------------------------------------------------------------
 
-	public function objectToArray($d) {
-		if (is_object($d)) {
-			// Gets the properties of the given object
-			// with get_object_vars function
-			$d = get_object_vars($d);
-		}
-	
-		if (is_array($d)) {
-			/*
-			 * Return array converted to object
-			* Using __FUNCTION__ (Magic constant)
-			* for recursive call
-			*/
-			return array_map(__FUNCTION__, $d);
-		}
-		else {
-			// Return array
-			return $d;
-		}
+	function setDependencies($id,$action_dependencies){
+		echo "setDependencies called".PHP_EOL;
+		//First check to see if this action already has a list of dependecies
+			$currentDependencies = $this->find_dependencies_by_id($id);
+			if($currentDependencies){
+				$currentDependencies = array_filter(json_decode(json_encode($currentDependencies), true));			
+			//If the action does have dependencies check to see if any differ from whats already in the database
+				if(!empty($currentDependencies)){
+					foreach($currentDependencies as $depAction_key => $depAction_value){
+						$index = array_search($depAction_value["base_name"], $action_dependencies);
+						if($index)
+							unset($action_dependencies[$index]);
+						else{
+							//drop the current dependency from the table it's no longer there
+							$where = array("base_id"=>$if,"dependency_id"=>$depAction_value['dependency_id']);
+							$this->delete_dependency_where($where);
+						}
+					}
+				}
+			}
+			echo "finding action array".PHP_EOL;
+			$actionArray = json_decode(json_encode($this->find_by_id($id)), true);
+			echo "Size of selected actions is:" .count($action_dependencies).PHP_EOL;
+			foreach($action_dependencies as $actionDeps){
+				echo "looping now".PHP_EOL;
+				$depActionArray = $json_decode(json_encode($this->find_by_name($actionDeps)), true);
+				$dataArray = array($id,$actionArray['name'],$depActionArray['id'],$depActionArray['name']);
+				$this->insert_dependency($dataArray);
+			}
+			echo "done!".PHP_EOL;
 	}
+	
+	/**
+	 * Finds an individual action's dependencies.
+	 *
+	 * @access public
+	 *
+	 * @param String $name An String with the acions base name.
+	 *
+	 * @return bool|object An object with the action.
+	 */
+	public function find_dependencies_by_name($name=null)
+	{
+		if (empty($this->selects))
+		{
+			$this->select($this->dependencies_table_name . '.*, base_name');
+		}
+		$this->table_name = $this->dependencies_table_name;
+		$data = parent::find_by('base_name',$name,'and');
+		$this->table_name = $this->temp_name;
+		return $data;
+	
+	}//end find_dependencies_by_name()
+	
+	/**
+	 * Finds an individual action's dependencies.
+	 *
+	 * @access public
+	 *
+	 * @param int $baseid An INT with the acions id.
+	 *
+	 * @return bool|object An object with the action.
+	 */
+	public function find_dependencies_by_id($baseid=null)
+	{
+		if (empty($this->selects))
+		{
+			$this->select($this->dependencies_table_name . '.*, base_id');
+		}
+		$this->table_name = $this->dependencies_table_name;
+		$data = parent::find_by('base_id',$baseid,'and');
+		$this->table_name = $this->temp_name;
+		return $data;
+	
+	}//end find_dependencies_by_name()
 	
 	/**
 	 * Finds an individual action.
@@ -157,7 +213,7 @@ class Actions_model extends BF_Model {
 	 *
 	 * @access public
 	 *
-	 * @param int $id An INT with the acions id.
+	 * @param string $name An String with the acions name.
 	 *
 	 * @return bool|object An object with the action.
 	 */
@@ -210,19 +266,24 @@ class Actions_model extends BF_Model {
 		
 		if (empty($this->selects))
 		{
-			$this->select($this->dependecies_table_name . '.*, base_id');
+			$this->select($this->dependencies_table_name . '.*, base_id');
 		}
-		return parent::find_by('base_id',$id,'and');
+		$this->table_name = $this->dependencies_table_name;
+		$data = parent::find_by('base_id',$id,'and');
+		$this->table_name = $this->temp_name;
+		return $data;
 	}
 	
 	public function get_dependencies_by_name($name=null)
 	{
 		if (empty($this->selects))
 		{
-			$this->select($this->dependecies_table_name . '.*, base_name');
+			$this->select($this->dependencies_table_name . '.*, base_name');
 		}
-		return parent::find_by('base_name',$name,'and');
-	
+		$this->table_name = $this->dependencies_table_name;
+		$data = parent::find_by('base_name',$name,'and');
+		$this->table_name = $this->temp_name;
+		return $data;	
 	}//end find_by_name()
 	
 	
@@ -261,4 +322,89 @@ class Actions_model extends BF_Model {
 		}
 		return $returnString;
 	}
+	
+	public function insert_dependency($data=null)
+	{
+		if ($this->skip_validation === false) {
+			$data = $this->validate($data, 'insert');
+			if ($data === false) {
+				return false;
+			}
+		}
+	
+		$data = $this->trigger('before_insert', $data);
+	
+		if ($this->set_created === true && $this->log_user === true
+				&& ! array_key_exists($this->created_by_field, $data)
+		) {
+			$data[$this->created_by_field] = $this->auth->user_id();
+		}
+	
+		// Insert it
+		$status = $this->db->insert($this->dependencies_table_name, $data);
+	
+		if ($status == false) {
+			$this->error = $this->get_db_error_message();
+		} elseif ($this->return_insert_id) {
+			$id = $this->db->insert_id();
+	
+			$status = $this->trigger('after_insert', $id);
+		}
+	
+		return $status;
+	
+	}//end insert()
+	
+	/**
+	 * Performs a delete using any field/value pair(s) as the 'where'
+	 * portion of your delete statement. If $this->soft_deletes is
+	 * TRUE, it will attempt to set $this->deleted_field on the current
+	 * record to '1', to allow the data to remain in the database.
+	 *
+	 * @param mixed/array $data key/value pairs accepts an associative array or a string
+	 *
+	 * @example 1) array( 'key' => 'value', 'key2' => 'value2' )
+	 * @example 2) ' (`key` = "value" AND `key2` = "value2") '
+	 *
+	 * @return bool TRUE/FALSE
+	 */
+	public function delete_dependency_where($where=NULL)
+	{
+		$where = $this->trigger('before_delete', $where);
+	
+		// set the where clause to be used in the update/delete below
+		$this->db->where($where);
+	
+		if ($this->soft_deletes === TRUE)
+		{
+			$data = array(
+					$this->deleted_field => 1,
+			);
+	
+			if ($this->log_user === TRUE)
+			{
+				$data[$this->deleted_by_field] = $this->auth->user_id();
+			}
+	
+			$this->db->update($this->dependency_table_name, $data);
+		}
+		else
+		{
+			$this->db->delete($this->dependency_table_name);
+		}
+	
+		$result = $this->db->affected_rows();
+	
+		if ($result)
+		{
+			$this->trigger('after_delete', $result);
+	
+			return $result;
+		}
+	
+		$this->error = lang('bf_model_db_error') . $this->get_db_error_message();
+	
+		return FALSE;
+	
+	}//end delete_where()
 }

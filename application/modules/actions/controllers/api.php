@@ -49,7 +49,7 @@ class Api extends REST_Controller {
 		if($actions) {
 			$array = json_decode(json_encode($actions), true);
 			$data['status'] = 'ok';
-			$data['result'] = $names;
+			$data['result'] = $array;
 			$this->response($data, 200);
 		}
 		else

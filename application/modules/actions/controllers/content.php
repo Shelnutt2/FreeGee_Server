@@ -181,7 +181,7 @@ class content extends Admin_Controller
 		}
 
 		// make sure we only pass in the fields we want
-		
+		$dependencies = array();
 		$data = array();
 		$data['name']        = $this->input->post('actions_name');
 		$data['description']        = $this->input->post('actions_description');
@@ -192,7 +192,7 @@ class content extends Admin_Controller
 		$data['stockonly']        = $this->input->post('actions_stockonly');
 		$data['hidden']        = $this->input->post('actions_hidden');
 		$data['priority']        = $this->input->post('actions_priority');
-		$data['dependencies']        = $this->setDependencies($this->input->post('actions_dependencies'));
+		$data['dependencies']        = $this->setBooleanDependencies($this->input->post('actions_dependencies'));
 		$data['successmessage']        = $this->input->post('actions_successmessage');
 		$data['rebootrecovery']        = $this->input->post('actions_rebootrecovery');
 
@@ -213,24 +213,31 @@ class content extends Admin_Controller
 		{
 			$return = $this->actions_model->update($id, $data);
 		}
-
+		if(is_numeric($id)){
+			echo "calling setDependencies".PHP_EOL;
+			$this->actions_model->setDependencies($id,$dependencies);
+		}
+		else
+			echo "id wasn't numeric";
+		
 		return $return;
 	}
 
 	//--------------------------------------------------------------------
 
-	private function setDependencies($action_dependencies){
+	private function setBooleanDependencies($action_dependencies){
 		if(is_bool($action_dependencies)){
-			$this->removeDependencies();
+			echo "Actions depends is a boolean".PHP_EOL;
 			return $action_dependencies;
 		}
 		else{
-			$action_dependencies = array_filter($action_dependencies);
+			echo "Actions depends is an array".PHP_EOL;
 			if(empty($action_dependencies)){ #Array should never return empty but checking anyway
+				echo "Actions depends is empty array".PHP_EOL;
 				return 0;
 			}
 			else{
-				
+				$dependencies = $action_dependencies;
 				return 1;
 			}
 		}
