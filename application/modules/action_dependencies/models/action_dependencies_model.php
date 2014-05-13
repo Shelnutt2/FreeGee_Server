@@ -79,11 +79,11 @@ class Action_dependencies_model extends BF_Model {
 		//First check to see if this action already has a list of dependecies
 		$currentDependencies = $this->find_by_id($id);
 		if($currentDependencies){
-			$currentDependencies = array_filter(json_decode(json_encode($currentDependencies), true));
+			$currentDependencies = json_decode(json_encode($currentDependencies), true);
 			//If the action does have dependencies check to see if any differ from whats already in the database
 			if(!empty($currentDependencies)){
 				foreach($currentDependencies as $depAction_key => $depAction_value){
-					$index = array_search($depAction_value["base_name"], $action_dependencies);
+					$index = array_search($depAction_value["dependency_name"], $action_dependencies);
 					if($index)
 						unset($action_dependencies[$index]);
 					else{

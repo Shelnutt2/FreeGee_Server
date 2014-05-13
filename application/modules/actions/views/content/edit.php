@@ -113,7 +113,15 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			<div class="control-group <?php echo form_error('dependencies') ? 'error' : ''; ?>">
 				<?php echo form_label('Action Dependencies', 'actions_dependencies', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-						<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('actions_dependencies[]', array_diff($this->actions_model->find_all_names(), array($actions['name'])), array(), 'checkbox'); ?> 
+						<?php $this->load->model('actions/actions_model');
+						$preSetArray = array();
+						if($actions['dependencies'] == 1){
+							foreach(json_decode(json_encode($this->actions_model->get_dependencies_by_id($actions['id']))) as $dep_id => $dep){
+								$array = get_object_vars($dep);
+								array_push($preSetArray, $array['dependency_name']);
+							}
+						}
+						echo $this->actions_model->createOptions('actions_dependencies[]', array_diff($this->actions_model->find_all_names(), array($actions['name'])), $preSetArray, 'checkbox'); ?> 
 				</div>
 			</div>
 

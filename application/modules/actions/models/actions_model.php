@@ -224,11 +224,11 @@ class Actions_model extends BF_Model {
 		if ($fieldType === 'checkbox') {
 			for ($i=0;$i<count($labelsArray);$i++) {
 				$returnString.='<label for="'.$valuesArray[$i].'">';
-				$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i].' />&nbsp';
+				$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i].' ';
 				if(in_array($valuesArray[$i], $selectedOption)){
 					$returnString.=' checked="checked" ';
-				}
-				$returnString.=$labelsArray[$i].'</label>';
+				}	
+				$returnString.='/>&nbsp'.$labelsArray[$i].'</label>';
 			}
 		}
 		if ($fieldType === 'radio') {
