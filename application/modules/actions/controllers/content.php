@@ -213,9 +213,6 @@ class content extends Admin_Controller
 			$return = $this->actions_model->update($id, $data);
 		}
 		if(is_numeric($id)){
-			echo "calling setDependencies".PHP_EOL;
-			echo "Size of selected actions is:" .count($this->input->post('actions_dependencies')).PHP_EOL;
-			echo "Type ofAcion Deps is: ".gettype($this->input->post('actions_dependencies')).PHP_EOL;
 			$this->actions_model->setDependencies($id,$this->input->post('actions_dependencies'));
 		}
 		else
@@ -228,13 +225,10 @@ class content extends Admin_Controller
 
 	private function setBooleanDependencies($action_dependencies){
 		if(is_bool($action_dependencies)){
-			echo "Actions depends is a boolean".PHP_EOL;
 			return $action_dependencies;
 		}
 		else{
-			echo "Actions depends is an array".PHP_EOL;
 			if(empty($action_dependencies)){ #Array should never return empty but checking anyway
-				echo "Actions depends is empty array".PHP_EOL;
 				return 0;
 			}
 			else{

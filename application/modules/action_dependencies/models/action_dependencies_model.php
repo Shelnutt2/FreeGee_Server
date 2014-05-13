@@ -69,14 +69,10 @@ class Action_dependencies_model extends BF_Model {
 	//--------------------------------------------------------------------
 
 	public function setDependencies(&$base_action,&$action_dependencies){
-		echo "setDependencies called".PHP_EOL;
-		echo "Size of selected actions is:" .count($action_dependencies).PHP_EOL;
-		echo "Type ofAcion Deps is: ".gettype($action_dependencies).PHP_EOL;
 		foreach($action_dependencies as $ad){
 			echo $ad.PHP_EOL;
 		}
 		if(!is_array($base_action)){
-			echo "base action isn't an array";
 			return false;
 		}
 		$id = $base_action['id'];
@@ -92,14 +88,13 @@ class Action_dependencies_model extends BF_Model {
 						unset($action_dependencies[$index]);
 					else{
 						//drop the current dependency from the table it's no longer there
-						$where = array("base_id"=>$if,"dependency_id"=>$depAction_value['dependency_id']);
-						$this->delete_dependency_where($where);
+						$where = array("base_id"=>$id,"dependency_id"=>$depAction_value['dependency_id']);
+						$this->delete_where($where);
 					}
 				}
 			}
 		}
 		foreach($action_dependencies as $actionDeps){
-			echo "looping now".PHP_EOL;
 			$this->load->model('actions/actions_model');
 			$depActionArray = json_decode(json_encode($this->actions_model->find_by_name($actionDeps)), true);
 			$dataArray = array();
