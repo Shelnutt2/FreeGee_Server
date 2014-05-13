@@ -65,7 +65,14 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					<td><?php e($record->stockonly) ?></td>
 					<td><?php e($record->hidden) ?></td>
 					<td><?php e($record->priority) ?></td>
-					<td><?php e($record->dependencies) ?></td>
+					<td><?php $this->load->model('actions_model'); if($record->dependencies == 1){
+						$outString = '';
+						foreach(json_decode(json_encode($this->actions_model->get_dependencies_by_name($record->name))) as $dep_id => $dep){
+							$array = get_object_vars($dep);
+							$outString .= ($array['dependency_name'].", ");
+						}
+						e(strrev(implode(strrev(''), explode(',', strrev($outString), 2))));
+					} ?></td>
 					<td><?php e($record->successmessage) ?></td>
 					<td><?php e($record->rebootrecovery) ?></td>
 				</tr>

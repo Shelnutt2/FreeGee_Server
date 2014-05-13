@@ -95,14 +95,14 @@ class Action_dependencies_model extends BF_Model {
 			}
 		}
 		foreach($action_dependencies as $actionDeps){
-			$this->load->model('actions/actions_model');
-			$depActionArray = json_decode(json_encode($this->actions_model->find_by_name($actionDeps)), true);
-			$dataArray = array();
-			$dataArray['base_id'] = $id;
-			$dataArray['base_name'] = $base_action['name'];
-			$dataArray['dependency_id'] = $depActionArray['id'];
-			$dataArray['dependency_name'] = $depActionArray['name'];
-			$this->action_dependencies_model->insert($dataArray);
+				$this->load->model('actions/actions_model');
+				$depActionArray = json_decode(json_encode($this->actions_model->find_by_name($actionDeps)), true);
+				$dataArray = array();
+				$dataArray['base_id'] = $id;
+				$dataArray['base_name'] = $base_action['name'];
+				$dataArray['dependency_id'] = $depActionArray['id'];
+				$dataArray['dependency_name'] = $depActionArray['name'];
+				$this->action_dependencies_model->insert($dataArray);
 		}
 		echo "done!".PHP_EOL;
 	}
@@ -122,7 +122,7 @@ class Action_dependencies_model extends BF_Model {
 		{
 			$this->select($this->table_name . '.*, base_name');
 		}
-		return parent::find_by('base_name',$name,'and');	
+		return parent::find_all_by('base_name',$name,'and');	
 	}//end find_dependencies_by_name()
 	
 	/**
@@ -140,6 +140,6 @@ class Action_dependencies_model extends BF_Model {
 		{
 			$this->select($this->table_name . '.*, base_id');
 		}
-		return parent::find_by('base_id',$baseid,'and');
+		return parent::find_all_by('base_id',$baseid,'and');
 	}//end find_dependencies_by_name()
 }

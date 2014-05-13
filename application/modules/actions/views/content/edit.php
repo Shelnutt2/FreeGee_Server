@@ -76,11 +76,11 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 				<?php echo form_label('Stock Only'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_stockonly_label') ); ?>
 				<div class='controls' aria-labelled-by='actions_stockonly_label'>
 					<label class='radio' for='actions_stockonly_option1'>
-						<input id='actions_stockonly_option1' name='actions_stockonly' type='radio' class='' value='1' <?php echo set_radio('actions_stockonly', TRUE, TRUE); ?> />
+						<input id='actions_stockonly_option1' name='actions_stockonly' type='radio' class='' value='1' <?php echo set_radio('actions_stockonly', TRUE, $actions['stockonly'] == 1 ? TRUE : FALSE); ?> />
 						True
 					</label>
 					<label class='radio' for='actions_stockonly_option2'>
-						<input id='actions_stockonly_option2' name='actions_stockonly' type='radio' class='' value='0' <?php echo set_radio('actions_stockonly', FALSE); ?> />
+						<input id='actions_stockonly_option2' name='actions_stockonly' type='radio' class='' value='0' <?php echo set_radio('actions_stockonly', FALSE, $actions['stockonly'] == 0 ? TRUE : FALSE); ?> />
 						False
 					</label>
 					<span class='help-inline'><?php echo form_error('stockonly'); ?></span>
@@ -91,11 +91,11 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 				<?php echo form_label('Hidden'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_hidden_label') ); ?>
 				<div class='controls' aria-labelled-by='actions_hidden_label'>
 					<label class='radio' for='actions_hidden_option1'>
-						<input id='actions_hidden_option1' name='actions_hidden' type='radio' class='' value='1' <?php echo set_radio('actions_hidden', TRUE, TRUE); ?> />
+						<input id='actions_hidden_option1' name='actions_hidden' type='radio' class='' value='1' <?php echo set_radio('actions_hidden', TRUE, $actions['hidden'] == 1 ? TRUE : FALSE); ?> />
 						True
 					</label>
 					<label class='radio' for='actions_hidden_option2'>
-						<input id='actions_hidden_option2' name='actions_hidden' type='radio' class='' value='0' <?php echo set_radio('actions_hidden', FALSE); ?> />
+						<input id='actions_hidden_option2' name='actions_hidden' type='radio' class='' value='0' <?php echo set_radio('actions_hidden', FALSE, $actions['hidden'] == 0 ? TRUE : FALSE); ?> />
 						False
 					</label>
 					<span class='help-inline'><?php echo form_error('hidden'); ?></span>
@@ -113,7 +113,7 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			<div class="control-group <?php echo form_error('dependencies') ? 'error' : ''; ?>">
 				<?php echo form_label('Action Dependencies', 'actions_dependencies', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-						<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('actions_dependencies[]', $this->actions_model->find_all_names(), array(), 'checkbox'); ?> 
+						<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('actions_dependencies[]', array_diff($this->actions_model->find_all_names(), array($actions['name'])), array(), 'checkbox'); ?> 
 				</div>
 			</div>
 
@@ -129,11 +129,11 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 				<?php echo form_label('Reboot to Recovery Required for action'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_rebootrecovery_label') ); ?>
 				<div class='controls' aria-labelled-by='actions_rebootrecovery_label'>
 					<label class='radio' for='actions_rebootrecovery_option1'>
-						<input id='actions_rebootrecovery_option1' name='actions_rebootrecovery' type='radio' class='' value='1' <?php echo set_radio('actions_rebootrecovery', TRUE, TRUE); ?> />
+						<input id='actions_rebootrecovery_option1' name='actions_rebootrecovery' type='radio' class='' value='1' <?php echo set_radio('actions_rebootrecovery', TRUE,  $actions['rebootrecovery'] == 1 ? TRUE : FALSE); ?> />
 						True
 					</label>
 					<label class='radio' for='actions_rebootrecovery_option2'>
-						<input id='actions_rebootrecovery_option2' name='actions_rebootrecovery' type='radio' class='' value='0' <?php echo set_radio('actions_rebootrecovery', FALSE); ?> />
+						<input id='actions_rebootrecovery_option2' name='actions_rebootrecovery' type='radio' class='' value='0' <?php echo set_radio('actions_rebootrecovery', FALSE,  $actions['rebootrecovery'] == 0 ? TRUE : FALSE); ?> />
 						False
 					</label>
 					<span class='help-inline'><?php echo form_error('rebootrecovery'); ?></span>
