@@ -181,7 +181,6 @@ class content extends Admin_Controller
 		}
 
 		// make sure we only pass in the fields we want
-		$dependencies = array();
 		$data = array();
 		$data['name']        = $this->input->post('actions_name');
 		$data['description']        = $this->input->post('actions_description');
@@ -215,7 +214,9 @@ class content extends Admin_Controller
 		}
 		if(is_numeric($id)){
 			echo "calling setDependencies".PHP_EOL;
-			$this->actions_model->setDependencies($id,$dependencies);
+			echo "Size of selected actions is:" .count($this->input->post('actions_dependencies')).PHP_EOL;
+			echo "Type ofAcion Deps is: ".gettype($this->input->post('actions_dependencies')).PHP_EOL;
+			$this->actions_model->setDependencies($id,$this->input->post('actions_dependencies'));
 		}
 		else
 			echo "id wasn't numeric";
@@ -237,7 +238,9 @@ class content extends Admin_Controller
 				return 0;
 			}
 			else{
-				$dependencies = $action_dependencies;
+				foreach($action_dependencies as $ad){
+					echo $ad.PHP_EOL;
+				}
 				return 1;
 			}
 		}

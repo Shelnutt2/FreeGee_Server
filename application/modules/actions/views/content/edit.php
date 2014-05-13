@@ -118,7 +118,7 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			</div>
 
 			<div class="control-group <?php echo form_error('successmessage') ? 'error' : ''; ?>">
-				<?php echo form_label('Success Message'. lang('bf_form_label_required'), 'actions_successmessage', array('class' => 'control-label') ); ?>
+				<?php echo form_label('Success Message', 'actions_successmessage', array('class' => 'control-label') ); ?>
 				<div class='controls'>
 					<input id='actions_successmessage' type='text' name='actions_successmessage'  value="<?php echo set_value('actions_successmessage', isset($actions['successmessage']) ? $actions['successmessage'] : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('successmessage'); ?></span>

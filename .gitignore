@@ -49,6 +49,7 @@ application/modules/**/.hg/*
 application/modules/*
 # Except the following modules:
 !application/modules/actions
+!application/modules/action_dependencies
 !application/modules/devices
 
 # Remove PHPStorm Project folders
