@@ -27,13 +27,13 @@ class content extends Admin_Controller
 		Assets::add_module_js('actions', 'actions.js');
 		
 		$this->load->library('session');
+		session_start();
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => false,
 				'uploadURL' => "/public/actions",
 				'uploadDir' => "/var/www/freegee.codefi.re/htdocs/public/actions/"
 		);
 		$this->session->set_userdata($_SESSION['KCFINDER']);
-		
 	}
 
 	//--------------------------------------------------------------------
