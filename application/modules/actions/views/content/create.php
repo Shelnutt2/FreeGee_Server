@@ -91,7 +91,7 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 				<?php echo form_label('Hidden'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_hidden_label') ); ?>
 				<div class='controls' aria-labelled-by='actions_hidden_label'>
 					<label class='radio' for='actions_hidden_option1'>
-						<input id='actions_hidden_option1' name='actions_hidden' type='radio' class='' value='1' <?php echo set_radio('actions_hidden', TRUE, F); ?> />
+						<input id='actions_hidden_option1' name='actions_hidden' type='radio' class='' value='1' <?php echo set_radio('actions_hidden', TRUE, FALSE); ?> />
 						True
 					</label>
 					<label class='radio' for='actions_hidden_option2'>
@@ -113,7 +113,7 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			<div class="control-group <?php echo form_error('dependencies') ? 'error' : ''; ?>">
 				<?php echo form_label('Action Dependencies', 'actions_dependencies', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-						<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('actions_dependencies[]', array_diff($this->actions_model->find_all_names(), array($actions['name'])), array(), 'checkbox'); ?> 
+						<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('actions_dependencies[]', $this->actions_model->find_all_names(), array(), 'checkbox'); ?> 
 				</div>
 			</div>
 
