@@ -1,7 +1,7 @@
 # For anything we don't specify, git will guess whether to normalize
 # line endings.  You already rely on it guessing when it shows diffs
 # (and you look at diffs when you commit, right?)
-* text=auto
+* text=lf
 
 # diff will parse PHP instead of C, and tell us which function we're in
 *.php diff=php
