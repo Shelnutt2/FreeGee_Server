@@ -21,7 +21,6 @@ class actions extends Front_Controller
 		$this->load->library('form_validation');
 		$this->load->model('actions_model', null, true);
 		$this->lang->load('actions');
-		
 
 		Assets::add_module_js('actions', 'actions.js');
 	}
