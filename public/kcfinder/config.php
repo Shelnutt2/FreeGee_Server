@@ -39,7 +39,7 @@ $_CONFIG = array(
         'image'   =>  "*img",
         
     // Freegee types
-		'zips'     => "zip",
+		'zips'     => "*zip zip",
     ),
 
 
