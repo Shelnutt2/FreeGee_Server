@@ -30,8 +30,6 @@ class content extends Admin_Controller
 		session_start();
 		$_SESSION['KCFINDER'] = array(
 				'disabled' => false,
-				'uploadURL' => "/public/actions",
-				'uploadDir' => "/var/www/freegee.codefi.re/htdocs/public/actions/"
 		);
 		$this->session->set_userdata($_SESSION['KCFINDER']);
 	}
