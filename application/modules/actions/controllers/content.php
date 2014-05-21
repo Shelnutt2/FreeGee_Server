@@ -197,10 +197,13 @@ class content extends Admin_Controller
 		$data['md5sum']        = $this->input->post('actions_md5sum');
 		$data['stockonly']        = $this->input->post('actions_stockonly');
 		$data['hidden']        = $this->input->post('actions_hidden');
+		$data['swversions']        = $this->input->post('actions_swversions');
+		$data['androidsdkversion']        = $this->input->post('actions_androidsdkversion');
 		$data['priority']        = $this->input->post('actions_priority');
 		$data['dependencies']        = $this->setBooleanDependencies($this->input->post('actions_dependencies'));
 		$data['successmessage']        = $this->input->post('actions_successmessage');
 		$data['rebootrecovery']        = $this->input->post('actions_rebootrecovery');
+		$data['betaonly']        = $this->input->post('actions_betaonly');
 
 		if ($type == 'insert')
 		{
@@ -219,7 +222,7 @@ class content extends Admin_Controller
 		{
 			$return = $this->actions_model->update($id, $data);
 		}
-		if(is_numeric($id)){
+		if(is_numeric($id) && is_array($this->input->post('actions_dependencies'))){
 			$this->actions_model->setDependencies($id,$this->input->post('actions_dependencies'));
 		}
 		else

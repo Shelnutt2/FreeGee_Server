@@ -24,10 +24,13 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					<th>md5sum</th>
 					<th>Stock Only</th>
 					<th>Hidden</th>
+					<th>Stock SW Versions</th>
+					<th>Android API Versions</th>
 					<th>Priority</th>
 					<th>Action Dependencies</th>
 					<th>Success Message</th>
 					<th>Reboot to Recovery Required for action</th>
+					<th>Beta Feed Only</th>
 				</tr>
 			</thead>
 			<?php if ($has_records) : ?>
@@ -64,6 +67,8 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					<td><?php e($record->md5sum) ?></td>
 					<td><?php e($record->stockonly) ?></td>
 					<td><?php e($record->hidden) ?></td>
+					<td><?php e($record->swversions) ?></td>
+					<td><?php e($record->androidsdkversion) ?></td>
 					<td><?php e($record->priority) ?></td>
 					<td><?php $this->load->model('actions_model'); if($record->dependencies == 1){
 						$outString = '';
@@ -75,6 +80,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					} ?></td>
 					<td><?php e($record->successmessage) ?></td>
 					<td><?php e($record->rebootrecovery) ?></td>
+					<td><?php e($record->betaonly) ?></td>
 				</tr>
 				<?php
 					endforeach;

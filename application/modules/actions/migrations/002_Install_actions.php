@@ -53,6 +53,14 @@ class Migration_Install_actions extends Migration
 			'type' => 'BOOL',
 			'null' => FALSE,
 		),
+		'swversions' => array(
+			'type' => 'TEXT',
+			'null' => FALSE,
+		),
+		'androidsdkversion' => array(
+			'type' => 'TEXT',
+			'null' => FALSE,
+		),
 		'priority' => array(
 			'type' => 'INT',
 			'null' => FALSE,
@@ -68,6 +76,10 @@ class Migration_Install_actions extends Migration
 		'rebootrecovery' => array(
 			'type' => 'BOOL',
 			'null' => FALSE,
+		),
+		'betaonly' => array(
+				'type' => 'BOOL',
+				'null' => FALSE,
 		),
 	);
 

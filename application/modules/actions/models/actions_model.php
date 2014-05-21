@@ -88,6 +88,14 @@ class Actions_model extends BF_Model {
 			"rules"		=> "required"
 		),
 		array(
+			"field"		=> "actions_swversions",
+			"label"		=> "Stock Software Versions"
+		),
+		array(
+			"field"		=> "actions_androidsdkversion",
+			"label"		=> "Android SDK Version"
+		),
+		array(
 			"field"		=> "actions_priority",
 			"label"		=> "Priority",
 			"rules"		=> "required|integer"
@@ -103,6 +111,11 @@ class Actions_model extends BF_Model {
 		array(
 			"field"		=> "actions_rebootrecovery",
 			"label"		=> "Reboot to Recovery Required for action",
+			"rules"		=> "required"
+		),
+		array(
+			"field"		=> "actions_betaonly",
+			"label"		=> "Action only listed in beta feed",
 			"rules"		=> "required"
 		),
 	);
@@ -188,7 +201,6 @@ class Actions_model extends BF_Model {
 	}
 	
 	public function setDependencies($id,&$action_dependencies){
-		echo "finding action array".PHP_EOL;
 		$actionArray = json_decode(json_encode($this->find_by_id($id)), true);
 		$this->load->model('action_dependencies/action_dependencies_model');
 		return $this->action_dependencies_model->setDependencies($actionArray,$action_dependencies);

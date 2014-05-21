@@ -78,7 +78,6 @@ class type_zip{
 		}
 		//Check to make sure the zip is signed correctly
 		$keys='/var/www/freegee.codefi.re/htdocs/keys';
-		echo $keys.PHP_EOL;
 		exec('android_zip_verifier '.$zipFile." ".$keys, $output, $exitCode);
 		if($exitCode != 0){
 /* 			foreach($output as $line){

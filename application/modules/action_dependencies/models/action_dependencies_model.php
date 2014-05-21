@@ -69,9 +69,6 @@ class Action_dependencies_model extends BF_Model {
 	//--------------------------------------------------------------------
 
 	public function setDependencies(&$base_action,&$action_dependencies){
-		foreach($action_dependencies as $ad){
-			echo $ad.PHP_EOL;
-		}
 		if(!is_array($base_action)){
 			return false;
 		}
@@ -104,7 +101,6 @@ class Action_dependencies_model extends BF_Model {
 				$dataArray['dependency_name'] = $depActionArray['name'];
 				$this->action_dependencies_model->insert($dataArray);
 		}
-		echo "done!".PHP_EOL;
 	}
 	
 	/**

@@ -102,6 +102,22 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 				</div>
 			</div>
 
+			<div class="control-group <?php echo form_error('swversions') ? 'error' : ''; ?>">
+				<?php echo form_label('swversions', 'actions_swversions', array('class' => 'control-label') ); ?>
+				<div class='controls'>
+					<input id='actions_swversions' type='text' name='actions_swversions' value="<?php echo set_value('actions_swversions', isset($actions['swversions']) ? $actions['swversions'] : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('swversions'); ?></span>
+				</div>
+			</div>
+
+			<div class="control-group <?php echo form_error('androidsdkversion') ? 'error' : ''; ?>">
+				<?php echo form_label('androidsdkversion', 'actions_androidsdkversion', array('class' => 'control-label') ); ?>
+				<div class='controls'>
+					<input id='actions_androidsdkversion' type='text' name='actions_androidsdkversion' value="<?php echo set_value('actions_androidsdkversion', isset($actions['androidsdkversion']) ? $actions['androidsdkversion'] : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('androidsdkversion'); ?></span>
+				</div>
+			</div>
+
 			<div class="control-group <?php echo form_error('priority') ? 'error' : ''; ?>">
 				<?php echo form_label('Priority'. lang('bf_form_label_required'), 'actions_priority', array('class' => 'control-label') ); ?>
 				<div class='controls'>
@@ -126,7 +142,7 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			</div>
 
 			<div class="control-group <?php echo form_error('rebootrecovery') ? 'error' : ''; ?>">
-				<?php echo form_label('Reboot to Recovery Required for action'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_rebootrecovery_label') ); ?>
+				<?php echo form_label('Reboot to Recovery Required for action?'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_rebootrecovery_label') ); ?>
 				<div class='controls' aria-labelled-by='actions_rebootrecovery_label'>
 					<label class='radio' for='actions_rebootrecovery_option1'>
 						<input id='actions_rebootrecovery_option1' name='actions_rebootrecovery' type='radio' class='' value='1' <?php echo set_radio('actions_rebootrecovery', TRUE); ?> />
@@ -137,6 +153,21 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 						False
 					</label>
 					<span class='help-inline'><?php echo form_error('rebootrecovery'); ?></span>
+				</div>
+			</div>
+
+			<div class="control-group <?php echo form_error('betaonly') ? 'error' : ''; ?>">
+				<?php echo form_label('Only listed in Beta Feed?'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_betaonly_label') ); ?>
+				<div class='controls' aria-labelled-by='actions_betaonly_label'>
+					<label class='radio' for='actions_betaonly_option1'>
+						<input id='actions_betaonly_option1' name='actions_betaonly' type='radio' class='' value='1' <?php echo set_radio('actions_betaonly', TRUE,  $actions['betaonly'] == 1 ? TRUE : FALSE); ?> />
+						True
+					</label>
+					<label class='radio' for='actions_betaonly_option2'>
+						<input id='actions_betaonly_option2' name='actions_betaonly' type='radio' class='' value='0' <?php echo set_radio('actions_betaonly', FALSE,  $actions['betaonly'] == 0 ? TRUE : FALSE); ?> />
+						False
+					</label>
+					<span class='help-inline'><?php echo form_error('betaonly'); ?></span>
 				</div>
 			</div>
 
