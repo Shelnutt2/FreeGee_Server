@@ -51,8 +51,25 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			<div class="control-group <?php echo form_error('zipfile') ? 'error' : ''; ?>">
 				<?php echo form_label('Zip File Name'. lang('bf_form_label_required'), 'actions_zipfile', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-					<input id='actions_zipfile' type='text' name='actions_zipfile'  value="<?php echo set_value('actions_zipfile', isset($actions['zipfile']) ? $actions['zipfile'] : ''); ?>" />
+					<input id='actions_zipfile' type='text' name='actions_zipfile' value="<?php echo set_value('actions_zipfile', isset($actions['zipfile']) ? $actions['zipfile'] : ''); ?>" />
+					<button type="button" onclick="openKCFinder(actions_zipfile,actions_zipfilelocation)">Select or Upload Action Zip</button>
 					<span class='help-inline'><?php echo form_error('zipfile'); ?></span>
+					<script type="text/javascript">
+					function openKCFinder(field, field2) {
+					    window.KCFinder = {
+					        callBack: function(url) {
+					            field.value = url.replace(/^.*(\\|\/|\:)/, '');
+					            field2.value = url;
+					            window.KCFinder = null;
+					        }
+					    };
+					    window.open('/public/kcfinder/browse.php?type=zips&dir=public/actions', 'kcfinder_textbox',
+					        'status=0, toolbar=0, location=0, menubar=0, directories=0, ' +
+					        'resizable=1, scrollbars=0, width=800, height=600'
+					    );
+					}
+
+					</script>
 				</div>
 			</div>
 
@@ -65,9 +82,9 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			</div>
 
 			<div class="control-group <?php echo form_error('md5sum') ? 'error' : ''; ?>">
-				<?php echo form_label('md5sum'. lang('bf_form_label_required'), 'actions_md5sum', array('class' => 'control-label') ); ?>
+				<?php echo form_label('md5sum', 'actions_md5sum', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-					<input id='actions_md5sum' type='text' name='actions_md5sum' maxlength="32" value="<?php echo set_value('actions_md5sum', isset($actions['md5sum']) ? $actions['md5sum'] : ''); ?>" />
+					<input id='actions_md5sum' type='text' name='actions_md5sum' maxlength="32" value="<?php echo set_value('actions_md5sum', isset($actions['md5sum']) ? $actions['md5sum'] : ''); ?>" readonly />
 					<span class='help-inline'><?php echo form_error('md5sum'); ?></span>
 				</div>
 			</div>
@@ -130,6 +147,14 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 				<?php echo form_label('Action Dependencies', 'actions_dependencies', array('class' => 'control-label') ); ?>
 				<div class='controls'>
 						<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('actions_dependencies[]', $this->actions_model->find_all_names(), array(), 'checkbox'); ?> 
+				</div>
+			</div>
+
+			<div class="control-group <?php echo form_error('premessage') ? 'error' : ''; ?>">
+				<?php echo form_label('Pre Perform Message', 'actions_premessage', array('class' => 'control-label') ); ?>
+				<div class='controls'>
+					<input id='actions_premessage' type='text' name='actions_premessage'  value="<?php echo set_value('actions_premessage', isset($actions['premessage']) ? $actions['premessage'] : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('premessage'); ?></span>
 				</div>
 			</div>
 

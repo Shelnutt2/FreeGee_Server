@@ -105,6 +105,10 @@ class Actions_model extends BF_Model {
 			"label"		=> "Action Dependencies",
 		),
 		array(
+			"field"		=> "actions_premessage",
+			"label"		=> "Pre Perform Message",
+		),
+		array(
 			"field"		=> "actions_successmessage",
 			"label"		=> "Success Message",
 		),

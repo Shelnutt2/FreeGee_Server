@@ -69,6 +69,10 @@ class Migration_Install_actions extends Migration
 			'type' => 'TEXT',
 			'null' => FALSE,
 		),
+		'premessage' => array(
+				'type' => 'TEXT',
+				'null' => FALSE,
+		),
 		'successmessage' => array(
 			'type' => 'TEXT',
 			'null' => FALSE,

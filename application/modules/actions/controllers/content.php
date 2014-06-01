@@ -194,13 +194,14 @@ class content extends Admin_Controller
 		$data['minapiversion']        = $this->input->post('actions_minapiversion');
 		$data['zipfile']        = $this->input->post('actions_zipfile');
 		$data['zipfilelocation']        = $this->input->post('actions_zipfilelocation');
-		$data['md5sum']        = $this->input->post('actions_md5sum');
+		$data['md5sum']        = $this->getMD5Sum(realpath(APPPATH.'../'.$this->input->post('actions_zipfilelocation')));
 		$data['stockonly']        = $this->input->post('actions_stockonly');
 		$data['hidden']        = $this->input->post('actions_hidden');
 		$data['swversions']        = $this->input->post('actions_swversions');
 		$data['androidsdkversion']        = $this->input->post('actions_androidsdkversion');
 		$data['priority']        = $this->input->post('actions_priority');
 		$data['dependencies']        = $this->setBooleanDependencies($this->input->post('actions_dependencies'));
+		$data['premessage']        = $this->input->post('actions_premessage');
 		$data['successmessage']        = $this->input->post('actions_successmessage');
 		$data['rebootrecovery']        = $this->input->post('actions_rebootrecovery');
 		$data['betaonly']        = $this->input->post('actions_betaonly');
@@ -227,7 +228,7 @@ class content extends Admin_Controller
 		}
 		else
 			echo "id wasn't numeric";
-		
+
 		return $return;
 	}
 
@@ -248,5 +249,11 @@ class content extends Admin_Controller
 				return 1;
 			}
 		}
+	}
+
+	private function getMD5Sum($path){
+		if(!file_exists($path))
+			die("Action zip file does not exists. Can not get md5sum");
+		return md5_file($path);
 	}
 }

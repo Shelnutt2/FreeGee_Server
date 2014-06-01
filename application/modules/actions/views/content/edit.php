@@ -82,9 +82,9 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 			</div>
 
 			<div class="control-group <?php echo form_error('md5sum') ? 'error' : ''; ?>">
-				<?php echo form_label('md5sum'. lang('bf_form_label_required'), 'actions_md5sum', array('class' => 'control-label') ); ?>
+				<?php echo form_label('md5sum', 'actions_md5sum', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-					<input id='actions_md5sum' type='text' name='actions_md5sum' maxlength="32" value="<?php echo set_value('actions_md5sum', isset($actions['md5sum']) ? $actions['md5sum'] : ''); ?>" />
+					<input id='actions_md5sum' type='text' name='actions_md5sum' maxlength="32" value="<?php echo set_value('actions_md5sum', isset($actions['md5sum']) ? $actions['md5sum'] : ''); ?>" readonly/>
 					<span class='help-inline'><?php echo form_error('md5sum'); ?></span>
 				</div>
 			</div>
@@ -155,6 +155,14 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 							}
 						}
 						echo $this->actions_model->createOptions('actions_dependencies[]', array_diff($this->actions_model->find_all_names(), array($actions['name'])), $preSetArray, 'checkbox'); ?> 
+				</div>
+			</div>
+
+			<div class="control-group <?php echo form_error('premessage') ? 'error' : ''; ?>">
+				<?php echo form_label('Pre Perform Message', 'actions_premessage', array('class' => 'control-label') ); ?>
+				<div class='controls'>
+					<input id='actions_premessage' type='text' name='actions_premessage'  value="<?php echo set_value('actions_premessage', isset($actions['premessage']) ? $actions['premessage'] : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('premessage'); ?></span>
 				</div>
 			</div>
 

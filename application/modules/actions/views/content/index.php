@@ -28,6 +28,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					<th>Android API Versions</th>
 					<th>Priority</th>
 					<th>Action Dependencies</th>
+					<th>Pre Preform Message</th>
 					<th>Success Message</th>
 					<th>Reboot to Recovery Required for action</th>
 					<th>Beta Feed Only</th>
@@ -78,6 +79,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 						}
 						e(strrev(implode(strrev(''), explode(',', strrev($outString), 2))));
 					} ?></td>
+					<td><?php e($record->premessage) ?></td>
 					<td><?php e($record->successmessage) ?></td>
 					<td><?php e($record->rebootrecovery) ?></td>
 					<td><?php e($record->betaonly) ?></td>
