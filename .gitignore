@@ -51,6 +51,7 @@ application/modules/*
 !application/modules/actions
 !application/modules/action_dependencies
 !application/modules/devices
+!application/modules/device_actions
 
 # Remove PHPStorm Project folders
 bonfire/.ideas
