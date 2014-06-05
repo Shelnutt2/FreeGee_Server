@@ -235,19 +235,13 @@ class content extends Admin_Controller
 	//--------------------------------------------------------------------
 
 	private function setBooleanDependencies($action_dependencies){
-		if(is_bool($action_dependencies)){
+		if(is_bool($action_dependencies))
 			return $action_dependencies;
-		}
 		else{
-			if(empty($action_dependencies)){ #Array should never return empty but checking anyway
+			if(empty($action_dependencies)) #Array should never return empty but checking anyway
 				return 0;
-			}
-			else{
-				foreach($action_dependencies as $ad){
-					echo $ad.PHP_EOL;
-				}
+			else
 				return 1;
-			}
 		}
 	}
 

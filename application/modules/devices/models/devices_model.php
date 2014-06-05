@@ -106,5 +106,98 @@ class Devices_model extends BF_Model {
 	protected $skip_validation 			= FALSE;
 
 	//--------------------------------------------------------------------
-
+	
+	/**
+	 * Finds an individual action.
+	 *
+	 * @access public
+	 *
+	 * @param int $id An INT with the acions id.
+	 *
+	 * @return bool|object An object with the action.
+	 */
+	public function find_by_model($model=null)
+	{
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, model');
+		}
+	
+		return parent::find_by('model',$model,'and');
+	
+	}//end find_by_id()
+	
+	/**
+	 * Finds an individual action.
+	 *
+	 * @access public
+	 *
+	 * @param string $name An String with the acions name.
+	 *
+	 * @return bool|object An object with the action.
+	 */
+	public function find_by_name($name=null)
+	{
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, name');
+		}
+	
+		return parent::find_by('name',$name,'and');
+	
+	}//end find_by_name()
+	
+	/**
+	 * Finds all actions
+	 * @see BF_Model::find_all()
+	 *
+	 * @access public
+	 *
+	 * @param none
+	 *
+	 * @return bool|object An object of all actions
+	 */
+	public function find_all()
+	{
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, model');
+		}
+		return parent::find_all();
+	
+	}//end find_by_name()
+	
+	public function find_all_names(){
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, name');
+		}
+		$array = parent::find_all();
+		$array = json_decode(json_encode($array), true);
+		$namesarray = array();
+		foreach($array as $action){
+			$namesarray[$action['model']] = $action['name'];
+		}
+		return $namesarray;
+	}
+	
+	public function setActions($model,&$actions){
+		$device = json_decode(json_encode($this->find_by_model($model)), true);
+		$this->load->model('device_actions/device_actions_model');
+		var_dump($model);
+		return $this->device_actions_model->setActions($device,$actions);
+	}
+	
+	public function get_actions_by_model($model=null){
+		$this->load->model('device_actions/device_actions_model');
+		return $this->device_actions_model->find_by_model($model);
+	}
+	
+	public function get_actions_by_name($name=null)
+	{
+		$this->load->model('device_actions/device_actions_model');
+		return $this->device_actions_model->find_by_name($name);
+	}//end find_by_name()
+	
+	
 }

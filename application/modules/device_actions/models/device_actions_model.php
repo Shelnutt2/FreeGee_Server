@@ -48,28 +48,95 @@ class Device_actions_model extends BF_Model {
 	protected $validation_rules 		= array(
 		array(
 			"field"		=> "device_actions_device_model",
-			"label"		=> "Device Model",
-			"rules"		=> "required"
+			"label"		=> "Device Model"
 		),
 		array(
 			"field"		=> "device_actions_device_name",
-			"label"		=> "Device Name",
-			"rules"		=> "required"
+			"label"		=> "Device Name"
 		),
 		array(
 			"field"		=> "device_actions_action_id",
-			"label"		=> "Action ID",
-			"rules"		=> "required"
+			"label"		=> "Action ID"
 		),
 		array(
 			"field"		=> "device_actions_action_name",
-			"label"		=> "Action Name",
-			"rules"		=> "required"
+			"label"		=> "Action Name"
 		),
 	);
 	protected $insert_validation_rules 	= array();
 	protected $skip_validation 			= FALSE;
 
 	//--------------------------------------------------------------------
-
+	
+	public function setActions(&$device,&$actions){
+		if(!is_array($device)){
+			return false;
+		}
+		$model = $device['model'];
+		//First check to see if this action already has a list of dependecies
+		$currentActions = $this->find_by_model($model);
+		if($currentActions){
+			$currentActions = json_decode(json_encode($currentActions), true);
+			//If the action does have dependencies check to see if any differ from whats already in the database
+			if(!empty($currentActions)){
+				foreach($currentActions as $Action_key => $Action_value){
+					$index = array_search($Action_value["action_name"], $actions);
+					if($index)
+						unset($actions[$index]);
+					else{
+						//drop the current dependency from the table it's no longer there
+						$where = array("device_model"=>$model,"action_name"=>$Action_value["action_name"]);
+						$this->delete_where($where);
+					}
+				}
+			}
+		}
+		foreach($actions as $action){
+			echo "Looping through actions".PHP_EOL;
+			$this->load->model('actions/actions_model');
+			$ActionArray = json_decode(json_encode($this->actions_model->find_by_name($action)), true);
+			$dataArray = array();
+			$dataArray['device_model'] = $model;
+			$dataArray['device_name'] = $device['name'];
+			$dataArray['action_id'] = $ActionArray['id'];
+			$dataArray['action_name'] = $ActionArray['name'];
+			$this->device_actions_model->insert($dataArray);
+		}
+	}
+	
+	/**
+	 * Finds an individual device actions by name.
+	 *
+	 * @access public
+	 *
+	 * @param String $name An String with the devices' name.
+	 *
+	 * @return bool|object An object with the action.
+	 */
+	public function find_by_name($name=null)
+	{
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, device_name');
+		}
+		return parent::find_all_by('device_name',$name,'and');
+	}//end find_dependencies_by_name()
+	
+	/**
+	 * Finds an individual device actions by model.
+	 *
+	 * @access public
+	 *
+	 * @param int $baseid An INT with the device model.
+	 *
+	 * @return bool|object An object with the action.
+	 */
+	public function find_by_model($model=null)
+	{
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, device_model');
+		}
+		return parent::find_all_by('device_model',$model,'and');
+	}//end find_dependencies_by_name()
 }

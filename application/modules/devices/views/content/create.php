@@ -68,12 +68,16 @@ $id = isset($devices['id']) ? $devices['id'] : '';
 				<?php echo form_label('Bootloader Exploit', '', array('class' => 'control-label', 'id' => 'devices_bootloader_exploit_label') ); ?>
 				<div class='controls' aria-labelled-by='devices_bootloader_exploit_label'>
 					<label class='radio' for='devices_bootloader_exploit_option1'>
-						<input id='devices_bootloader_exploit_option1' name='devices_bootloader_exploit' type='radio' class='' value='option1' <?php echo set_radio('devices_bootloader_exploit', 'option1', TRUE); ?> />
-						Radio option 1
+						<input id='devices_bootloader_exploit_option1' name='devices_bootloader_exploit' type='radio' class='' value='0' <?php echo set_radio('devices_bootloader_exploit', '1'); ?> />
+						Mako Exploit
 					</label>
 					<label class='radio' for='devices_bootloader_exploit_option2'>
-						<input id='devices_bootloader_exploit_option2' name='devices_bootloader_exploit' type='radio' class='' value='option2' <?php echo set_radio('devices_bootloader_exploit', 'option2'); ?> />
-						Radio option 2
+						<input id='devices_bootloader_exploit_option2' name='devices_bootloader_exploit' type='radio' class='' value='1' <?php echo set_radio('devices_bootloader_exploit', '2'); ?> />
+						Loki
+					</label>
+					<label class='radio' for='devices_bootloader_exploit_option2'>
+						<input id='devices_bootloader_exploit_option3' name='devices_bootloader_exploit' type='radio' class='' value='2' <?php echo set_radio('devices_bootloader_exploit', '3'); ?> />
+						Classified Exploit
 					</label>
 					<span class='help-inline'><?php echo form_error('bootloader_exploit'); ?></span>
 				</div>
@@ -90,20 +94,14 @@ $id = isset($devices['id']) ? $devices['id'] : '';
 			<div class="control-group <?php echo form_error('maintainers') ? 'error' : ''; ?>">
 				<?php echo form_label('Freegee Maintainers'. lang('bf_form_label_required'), 'devices_maintainers', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-					<label class='checkbox' for='devices_maintainers'>
-						<input type='checkbox' id='devices_maintainers' name='devices_maintainers' value='1' <?php echo (isset($devices['maintainers']) && $devices['maintainers'] == 1) ? 'checked="checked"' : set_checkbox('devices_maintainers', 1); ?>>
-						<span class='help-inline'><?php echo form_error('maintainers'); ?></span>
-					</label>
+					<?php $this->load->model('users/user_model'); echo $this->user_model->createOptions('devices_maintainers[]', $this->user_model->find_all_names(), array(), 'checkbox'); ?>
 				</div>
 			</div>
 
 			<div class="control-group <?php echo form_error('actions') ? 'error' : ''; ?>">
 				<?php echo form_label('Actions', 'devices_actions', array('class' => 'control-label') ); ?>
 				<div class='controls'>
-					<label class='checkbox' for='devices_actions'>
-						<input type='checkbox' id='devices_actions' name='devices_actions' value='1' <?php echo (isset($devices['actions']) && $devices['actions'] == 1) ? 'checked="checked"' : set_checkbox('devices_actions', 1); ?>>
-						<span class='help-inline'><?php echo form_error('actions'); ?></span>
-					</label>
+					<?php $this->load->model('actions/actions_model'); echo $this->actions_model->createOptions('devices_actions[]', $this->actions_model->find_all_names(), array(), 'checkbox'); ?>
 				</div>
 			</div>
 

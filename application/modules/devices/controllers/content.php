@@ -190,8 +190,8 @@ class content extends Admin_Controller
 		$data['firmware']        = $this->input->post('devices_firmware');
 		$data['bootloader_exploit']        = $this->input->post('devices_bootloader_exploit');
 		$data['partition_map']        = $this->input->post('devices_partition_map');
-		$data['maintainers']        = $this->input->post('devices_maintainers');
-		$data['actions']        = $this->input->post('devices_actions');
+		$data['maintainers']        = $this->makeMaintainers($this->input->post('devices_maintainers'));
+		$data['actions']        = $this->setBooleanActions($this->input->post('devices_actions'));
 		$data['buildprop_id']        = $this->input->post('devices_buildprop_id');
 		$data['buildprop_sw_id']        = $this->input->post('devices_buildprop_sw_id');
 
@@ -212,11 +212,38 @@ class content extends Admin_Controller
 		{
 			$return = $this->devices_model->update($id, $data);
 		}
+		if(is_array($this->input->post('devices_actions'))){
+			$this->devices_model->setActions($this->input->post('devices_model'),$this->input->post('devices_actions'));
+		}
 
 		return $return;
 	}
 
 	//--------------------------------------------------------------------
 
+	private function makeMaintainers($array){
+		if(is_string($array))
+			return $array;
+		elseif(is_array($array)){
+			$list = "";
+			foreach($array as $name){
+				$list = $list.$name.",";
+			}
+			return rtrim($list, ",");
+		}
+		else
+			die("Unknown maintainers post type");
+	}
+	
+	private function setBooleanActions($actions){
+		if(is_bool($actions))
+			return $actions;
+		else{
+			if(empty($actions)) #Array should never return empty but checking anyway
+				return 0;
+			else
+				return 1;
+		}
+	}
 
 }

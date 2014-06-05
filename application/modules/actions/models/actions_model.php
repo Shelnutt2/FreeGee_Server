@@ -127,8 +127,6 @@ class Actions_model extends BF_Model {
 	protected $skip_validation 			= FALSE;
 
 	//--------------------------------------------------------------------
-
-
 	
 	/**
 	 * Finds an individual action.

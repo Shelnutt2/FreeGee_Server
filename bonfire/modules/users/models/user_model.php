@@ -472,6 +472,29 @@ class User_model extends BF_Model
 	}//end find_all()
 
 	//--------------------------------------------------------------------
+	
+	/**
+	 * Returns all user records names, or usernames if names are blank
+	 *
+	 * @access public
+	 *
+	 * @return bool An array of objects with each user's information.
+	 */
+	public function find_all_names(){
+		if (empty($this->selects))
+		{
+			$this->select($this->table_name . '.*, username');
+		}
+		$array = parent::find_all();
+		$array = json_decode(json_encode($array), true);
+		$namesarray = array();
+		foreach($array as $user){
+			$namesarray[$user['id']] = $user['username'];
+		}
+		return $namesarray;
+	}//end find_all_names()
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Locates a single user based on a field/value match, with their role information.
@@ -1011,4 +1034,39 @@ class User_model extends BF_Model
 
 	//--------------------------------------------------------------------
 
+	/**
+	 *
+	 * @param string $fieldName Name of the checkbox or radio buttons field
+	 * @param array $labelsArray labels array
+	 * @param array $selectedOption labels which are prechecked
+	 * @param string $fieldType Specify if its 'checkbox' or 'radio'
+	 * @param array $valuesArray Option values array, if not given values will be labels
+	 * @return string
+	 */
+	function createOptions($fieldName, $labelsArray=array(), $selectedOption, $fieldType,$valuesArray = array()) {
+		$returnString = '';
+		$valuesArray = array_values($valuesArray);
+		$labelsArray = array_values($labelsArray);
+		if(count($valuesArray)!=count($labelsArray))
+			$valuesArray=$labelsArray;
+		if ($fieldType === 'checkbox') {
+			for ($i=0;$i<count($labelsArray);$i++) {
+				$returnString.='<label for="'.$valuesArray[$i].'">';
+				$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i].' ';
+				if(in_array($valuesArray[$i], $selectedOption)){
+					$returnString.=' checked="checked" ';
+				}
+				$returnString.='/>&nbsp'.$labelsArray[$i].'</label>';
+			}
+		}
+		if ($fieldType === 'radio') {
+			for ($i=0;$i<count($labelsArray);$i++) {
+				$returnString.='&nbsp&nbsp<input type="radio" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i];
+				if($valuesArray[$i]== $selectedOption)
+					$returnString.=' checked="checked" ';
+				$returnString.=' /><label>'.$labelsArray[$i].'</label>';
+			}
+		}
+		return $returnString;
+	}
 }//end User_model
