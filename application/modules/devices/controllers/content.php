@@ -25,6 +25,13 @@ class content extends Admin_Controller
 		Template::set_block('sub_nav', 'content/_sub_nav');
 
 		Assets::add_module_js('devices', 'devices.js');
+
+		$this->load->library('session');
+		session_start();
+		$_SESSION['KCFINDER'] = array(
+				'disabled' => false,
+		);
+		$this->session->set_userdata($_SESSION['KCFINDER']);
 	}
 
 	//--------------------------------------------------------------------

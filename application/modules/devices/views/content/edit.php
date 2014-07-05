@@ -40,11 +40,106 @@ $id = isset($devices['id']) ? $devices['id'] : '';
 				</div>
 			</div>
 
+			<style type="text/css">
+
+			#image {
+    			width: 200px;
+	    		height: 200px;
+        		overflow: hidden;
+        		cursor: pointer;
+        		background: #000;
+        		color: #fff;
+    		}
+    		#image img {
+        		visibility: hidden;
+    		}
+
+    		</style>
+ 
+    		<script type="text/javascript">
+    		function openKCFinder(div, textbox) {
+        		window.KCFinder = {
+        	    		callBack: function(url) {
+        	        		window.KCFinder = null;
+        	        		textbox.value = url;
+        	        		div.innerHTML = '<div style="margin:5px">Loading...</div>';
+        	        		var img = new Image();
+        	        		img.src = url;
+        	        		img.onload = function() {
+        	            		div.innerHTML = '<img id="img" src="' + url + '" />';
+        	            		var img = document.getElementById('img');
+        	            		var o_w = img.offsetWidth;
+        	            		var o_h = img.offsetHeight;
+        	            		var f_w = div.offsetWidth;
+        	            		var f_h = div.offsetHeight;
+        	            		if ((o_w > f_w) || (o_h > f_h)) {
+        	                		if ((f_w / f_h) > (o_w / o_h))
+        	                    		f_w = parseInt((o_w * f_h) / o_h);
+        	                		else if ((f_w / f_h) < (o_w / o_h))
+        	                    		f_h = parseInt((o_h * f_w) / o_w);
+        	                		img.style.width = f_w + "px";
+        	                		img.style.height = f_h + "px";
+        	                		} else {
+        	                    		f_w = o_w;
+        	                    		f_h = o_h;
+        	                    		}
+        	            		img.style.marginLeft = parseInt((div.offsetWidth - f_w) / 2) + 'px';
+        	            		img.style.marginTop = parseInt((div.offsetHeight - f_h) / 2) + 'px';
+        	            		img.style.visibility = "visible";
+        	            		}
+        	        		}
+        		};
+        		window.open('/public/kcfinder/browse.php?type=images&dir=public/images',
+        	    		'kcfinder_image', 'status=0, toolbar=0, location=0, menubar=0, ' +
+        	    		'directories=0, resizable=1, scrollbars=0, width=800, height=600'
+        	    		);
+        		}
+    		</script>
+
+    		<script type="text/javascript">
+    			function setImage(div,url) {
+    						if(!url || 0 === url.length){
+    							div.innerHTML = '<div style="margin:5px">Click here to choose an image</div>';
+    							return;
+    						}
+        	        		div.innerHTML = '<div style="margin:5px">Loading...</div>';
+        	        		var img = new Image();
+        	        		img.src = url;
+        	        		img.onload = function() {
+        	            		div.innerHTML = '<img id="img_device" src="' + url + '" />';
+        	            		var img = document.getElementById('img_device');
+        	            		var o_w = img.offsetWidth;
+        	            		var o_h = img.offsetHeight;
+        	            		var f_w = div.offsetWidth;
+        	            		var f_h = div.offsetHeight;
+        	            		if ((o_w > f_w) || (o_h > f_h)) {
+        	                		if ((f_w / f_h) > (o_w / o_h))
+        	                    		f_w = parseInt((o_w * f_h) / o_h);
+        	                		else if ((f_w / f_h) < (o_w / o_h))
+        	                    		f_h = parseInt((o_h * f_w) / o_w);
+        	                		img.style.width = f_w + "px";
+        	                		img.style.height = f_h + "px";
+        	                		} else {
+        	                    		f_w = o_w;
+        	                    		f_h = o_h;
+        	                    		}
+        	            		img.style.marginLeft = parseInt((div.offsetWidth - f_w) / 2) + 'px';
+        	            		img.style.marginTop = parseInt((div.offsetHeight - f_h) / 2) + 'px';
+        	            		img.style.visibility = "visible";
+        	            		}
+        	        		}
+    		</script>
 			<div class="control-group <?php echo form_error('image') ? 'error' : ''; ?>">
 				<?php echo form_label('Device Image', 'devices_image', array('class' => 'control-label') ); ?>
 				<div class='controls'>
 					<input id='devices_image' type='text' name='devices_image'  value="<?php echo set_value('devices_image', isset($devices['image']) ? $devices['image'] : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('image'); ?></span>
+					<br><br>
+					<div id="image" onclick="openKCFinder(this, devices_image)">
+						<script type="text/javascript">
+							setImage(document.getElementById('image'),"<?php echo set_value('devices_image', isset($devices['image']) ? $devices['image'] : ''); ?>")						
+						</script>
+					</div>
 				</div>
 			</div>
 
