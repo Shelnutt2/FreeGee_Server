@@ -52,6 +52,7 @@ application/modules/*
 !application/modules/action_dependencies
 !application/modules/devices
 !application/modules/device_actions
+!application/modules/freegee
 
 # Remove PHPStorm Project folders
 bonfire/.ideas
