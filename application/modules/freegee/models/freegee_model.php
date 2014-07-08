@@ -62,4 +62,45 @@ class Freegee_model extends BF_Model {
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Finds all api version
+	 * @see BF_Model::find_all()
+	 *
+	 * @access public
+	 *
+	 * @param none
+	 *
+	 * @return bool|object An object of all actions
+	 */
+	public function find_all()
+	{
+		return parent::find_all();
+	
+	}//end find_by_name()
+	
+	/**
+	 * Matches highest api verison supported by client
+	 * 
+	 * @see BF_Model::find_all()
+	 *
+	 * @access public
+	 *
+	 * @param none
+	 *
+	 * @return bool| API versin
+	 */
+	public function get_api_by_version($client_version)
+	{
+		$api_versions = json_decode(json_encode($this->find_all()),true);
+		$api_version = 1;
+		foreach($api_versions as $api){
+			if(version_compare($client_version,$api['min_client'],'>=')){
+				if($api['api_version'] > $api_version){
+					$api_version + $api['api_version'];
+				}
+			}
+		}
+		return $api_version;
+
+	}//end get_api_by_version()
 }

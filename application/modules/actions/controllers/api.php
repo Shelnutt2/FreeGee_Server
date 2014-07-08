@@ -11,11 +11,6 @@ class Api extends REST_Controller {
 		#$this->lang->load('actions_model');
 		#$this->load->library('form_validation');
 	}
-	function test_get(){
-		$data['status'] = 'ok';
-		$data['result'] = 'test';
-		$this->response($data, 200);
-	}
 	function action_get() {
 		if(!$this->get('id') && !$this->get('name')) {
 			$data['status'] = 'error';
