@@ -192,6 +192,7 @@ class content extends Admin_Controller
 		$data = array();
 		$data['name']        = $this->input->post('devices_name');
 		$data['model']        = $this->input->post('devices_model');
+		$data['description']        = $this->input->post('devices_description');
 		$data['image']        = $this->input->post('devices_image');
 		$data['carrier']        = $this->input->post('devices_carrier');
 		$data['firmware']        = $this->input->post('devices_firmware');
@@ -201,6 +202,7 @@ class content extends Admin_Controller
 		$data['actions']        = $this->setBooleanActions($this->input->post('devices_actions'));
 		$data['buildprop_id']        = $this->input->post('devices_buildprop_id');
 		$data['buildprop_sw_id']        = $this->input->post('devices_buildprop_sw_id');
+		$data['parent_device']        = $this->input->post('devices_parent_device');
 
 		if ($type == 'insert')
 		{

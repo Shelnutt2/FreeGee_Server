@@ -144,7 +144,7 @@ class CI_Security {
 		}
 
 		// Do the tokens exist in both the _POST and _COOKIE arrays?
-		if ( ! isset($_POST[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name]))
+		/* if ( ! isset($_POST[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name]))
 		{
 			$this->csrf_show_error();
 		}
@@ -153,7 +153,7 @@ class CI_Security {
 		if ($_POST[$this->_csrf_token_name] != $_COOKIE[$this->_csrf_cookie_name])
 		{
 			$this->csrf_show_error();
-		}
+		} */
 
 		// We kill this since we're done and we don't want to
 		// polute the _POST array

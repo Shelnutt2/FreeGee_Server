@@ -191,6 +191,7 @@ class content extends Admin_Controller
 		$data = array();
 		$data['name']        = $this->input->post('actions_name');
 		$data['description']        = $this->input->post('actions_description');
+		$data['category']        = $this->input->post('actions_category');
 		$data['minapiversion']        = $this->input->post('actions_minapiversion');
 		$data['zipfile']        = $this->input->post('actions_zipfile');
 		$data['zipfilelocation']        = $this->input->post('actions_zipfilelocation');

@@ -39,6 +39,14 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 					<span class='help-inline'><?php echo form_error('description'); ?></span>
 				</div>
 			</div>
+			
+			<div class="control-group <?php echo form_error('category') ? 'error' : ''; ?>">
+				<?php echo form_label('category'. lang('bf_form_label_required'), 'actions_category', array('class' => 'control-label') ); ?>
+				<div class='controls'>
+					<input id='actions_category' type='text' name='actions_category'  value="<?php echo set_value('actions_category', isset($actions['category']) ? $actions['category'] : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('category'); ?></span>
+				</div>
+			</div>
 
 			<div class="control-group <?php echo form_error('minapiversion') ? 'error' : ''; ?>">
 				<?php echo form_label('Minimum API Version'. lang('bf_form_label_required'), 'actions_minapiversion', array('class' => 'control-label') ); ?>

@@ -64,6 +64,10 @@ class Migration_Install_devices extends Migration
 			'type' => 'TEXT',
 			'null' => FALSE,
 		),
+		'parent_device' => array(
+			'type' => 'INT',
+			'null' => FALSE,
+		),
 	);
 
 	/**

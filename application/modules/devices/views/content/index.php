@@ -18,6 +18,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					
 					<th>Name</th>
 					<th>Model Number</th>
+					<th>Description</th>
 					<th>Device Image</th>
 					<th>Carrier</th>
 					<th>Stock Software Version</th>
@@ -57,6 +58,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					<td><?php e($record->name); ?></td>
 				<?php endif; ?>
 					<td><?php e($record->model) ?></td>
+					<td><?php e($record->description) ?></td>
 					<td><?php e($record->image) ?></td>
 					<td><?php e($record->carrier) ?></td>
 					<td><?php e($record->firmware) ?></td>
@@ -66,6 +68,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					<td><?php e($record->actions) ?></td>
 					<td><?php e($record->buildprop_id) ?></td>
 					<td><?php e($record->buildprop_sw_id) ?></td>
+					<td><?php e($record->parent_device) ?></td>
 				</tr>
 				<?php
 					endforeach;

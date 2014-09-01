@@ -18,6 +18,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					
 					<th>Name</th>
 					<th>Description</th>
+					<th>Category</th>
 					<th>Minimum API Version</th>
 					<th>Zip File Name</th>
 					<th>Zip File Location</th>
@@ -62,6 +63,7 @@ $has_records	= isset($records) && is_array($records) && count($records);
 					<td><?php e($record->name); ?></td>
 				<?php endif; ?>
 					<td><?php e($record->description) ?></td>
+					<td><?php e($record->category) ?></td>
 					<td><?php e($record->minapiversion) ?></td>
 					<td><?php e($record->zipfile) ?></td>
 					<td><?php e($record->zipfilelocation) ?></td>

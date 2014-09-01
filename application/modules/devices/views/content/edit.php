@@ -226,6 +226,13 @@ $id = isset($devices['id']) ? $devices['id'] : '';
 					<span class='help-inline'><?php echo form_error('buildprop_sw_id'); ?></span>
 				</div>
 			</div>
+			
+			<div class="control-group <?php echo form_error('parent_device') ? 'error' : ''; ?>">
+				<?php echo form_label('Parent Device', 'devices_parent_device', array('class' => 'control-label') ); ?>
+				<div class='controls'>
+						<?php $this->load->model('devices/devices_model'); echo $this->devices_model->createOptions('devics_parent_device[]', $this->devices_model->find_all_names(), array(), 'checkbox'); ?> 
+				</div>
+			</div>
 
 			<div class="form-actions">
 				<input type="submit" name="save" class="btn btn-primary" value="<?php echo lang('devices_action_edit'); ?>"  />

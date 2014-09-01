@@ -28,6 +28,10 @@ class Migration_Install_actions extends Migration
 			'type' => 'TEXT',
 			'null' => FALSE,
 		),
+		'category' => array(
+			'type' => 'TEXT',
+			'null' => FALSE,
+		),
 		'minapiversion' => array(
 			'type' => 'INT',
 			'null' => FALSE,
