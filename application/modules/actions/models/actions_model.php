@@ -75,7 +75,7 @@ class Actions_model extends BF_Model {
 		array(
 			"field"		=> "actions_md5sum",
 			"label"		=> "md5sum",
-			"rules"		=> "required|max_length[32]"
+			"rules"		=> "max_length[32]"
 		),
 		array(
 			"field"		=> "actions_stockonly",
@@ -238,7 +238,7 @@ class Actions_model extends BF_Model {
 		if ($fieldType === 'checkbox') {
 			for ($i=0;$i<count($labelsArray);$i++) {
 				$returnString.='<label for="'.$valuesArray[$i].'">';
-				$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name=' . $fieldName.' value='.$valuesArray[$i].' id='.$valuesArray[$i].' ';
+				$returnString.='&nbsp&nbsp&nbsp<input type="checkbox" name="' . $fieldName.'" value="'.$valuesArray[$i].'" id="'.$valuesArray[$i].'" ';
 				if(in_array($valuesArray[$i], $selectedOption)){
 					$returnString.=' checked="checked" ';
 				}	

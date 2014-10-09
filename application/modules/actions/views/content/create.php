@@ -193,11 +193,11 @@ $id = isset($actions['id']) ? $actions['id'] : '';
 				<?php echo form_label('Only listed in Beta Feed?'. lang('bf_form_label_required'), '', array('class' => 'control-label', 'id' => 'actions_betaonly_label') ); ?>
 				<div class='controls' aria-labelled-by='actions_betaonly_label'>
 					<label class='radio' for='actions_betaonly_option1'>
-						<input id='actions_betaonly_option1' name='actions_betaonly' type='radio' class='' value='1' <?php echo set_radio('actions_betaonly', TRUE,  $actions['betaonly'] == 1 ? TRUE : FALSE); ?> />
+						<input id='actions_betaonly_option1' name='actions_betaonly' type='radio' class='' value='1' <?php echo set_radio('actions_betaonly', TRUE,  (isset($actions['betaonly']) && $actions['betaonly'] == 1) ? TRUE : FALSE); ?> />
 						True
 					</label>
 					<label class='radio' for='actions_betaonly_option2'>
-						<input id='actions_betaonly_option2' name='actions_betaonly' type='radio' class='' value='0' <?php echo set_radio('actions_betaonly', FALSE,  $actions['betaonly'] == 0 ? TRUE : FALSE); ?> />
+						<input id='actions_betaonly_option2' name='actions_betaonly' type='radio' class='' value='0' <?php echo set_radio('actions_betaonly', FALSE,  ((isset($actions['betaonly']) && $actions['betaonly'] == 0) || !isset($actions['betaonly'])) ? TRUE : FALSE); ?> />
 						False
 					</label>
 					<span class='help-inline'><?php echo form_error('betaonly'); ?></span>

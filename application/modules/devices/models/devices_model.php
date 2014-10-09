@@ -264,7 +264,7 @@ class Devices_model extends BF_Model {
 //				error_log("id_value: $id_value");
 //				error_log("posted: ".$build_prop[str_replace('.','_',$id)]);
 //				error_log("posted_id: ".str_replace('.','_',$id));
-				if(strcasecmp($build_prop[str_replace('.','_',$id)],$id_value) == 0){
+				if(array_key_exists(str_replace('.','_',$id),$build_prop) && strcasecmp($build_prop[str_replace('.','_',$id)],$id_value) == 0){
 //					error_log("matched");
 					$count++;
 				}
